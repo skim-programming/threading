@@ -29,8 +29,8 @@ public:
     }
 
     template<class F>
-    auto enqueue(F&& f) -> std::future<decltype(f())> {
-        using return_type = decltype(f());
+    auto enqueue(F&& f) -> std::future<decltype(f())> { // alternatively decltype(auto) for cleaner syntax
+        using return_type = decltype(f()); 
         auto task = std::make_shared<std::packaged_task<return_type()>>(std::forward<F>(f));
         std::future<return_type> res = task->get_future();
         {
